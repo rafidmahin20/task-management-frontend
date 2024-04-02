@@ -19,7 +19,7 @@ function Header({setTasks, tasks, setIsVerified, isVerified}) {
       toast.success(data.message)
       setIsVerified(false);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message);
     }
   };
   return (
