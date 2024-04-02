@@ -6,12 +6,13 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
 function Header({setTasks, tasks, setIsVerified, isVerified}) {
   const [allTasks, setAllTasks] = useState([]);
+  const navigateTo = useNavigate();
   useEffect(() => {
     fetchTasks();
   }, [isVerified]);
@@ -36,7 +37,8 @@ function Header({setTasks, tasks, setIsVerified, isVerified}) {
         "http://localhost:4000/api/v1/user/logout",
         {withCredentials: true}
       );
-      toast.success(data.message)
+      toast.success(data.message);
+      navigateTo("/login");
       setIsVerified(false);
     } catch (error) {
       toast.error(error.response?.data.message);

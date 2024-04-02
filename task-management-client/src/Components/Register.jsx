@@ -5,8 +5,6 @@ import toast from 'react-hot-toast';
 import { Link, Navigate } from 'react-router-dom';
 
 
-
-
 const Register = ({isVerified, setIsVerified}) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
