@@ -13,6 +13,7 @@ const App = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [user, setUser] = useState({});
+  const [taskTitle, setTaskTitle] = useState("Tasks");
 
   useEffect(() => {
     const handleGetUser = async () => {
@@ -36,9 +37,9 @@ const App = () => {
       <Router>
         <Header 
         setTasks={setTasks}
-        tasks={tasks}
         setIsVerified={setIsVerified}
         isVerified={isVerified}
+        setTaskTitle={setTaskTitle}
         />
         <Routes>
           <Route path='/' element={<Home 

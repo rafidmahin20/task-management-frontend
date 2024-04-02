@@ -10,63 +10,65 @@ import { Link, useNavigate } from 'react-router-dom';
 
 
 
-function Header({setTasks, tasks, setIsVerified, isVerified}) {
+function Header({setTasks,  setIsVerified, isVerified, setTaskTitle,}) {
   const [allTasks, setAllTasks] = useState([]);
-  const navigateTo = useNavigate();
   useEffect(() => {
     fetchTasks();
   }, [isVerified]);
 
   const fetchTasks = async () => {
     try {
-      const {data} = await axios.get(
+      const response = await axios.get(
         "http://localhost:4000/api/v1/task/mytask",
-        {withCredentials: true}
+        { withCredentials: true }
       );
-      setAllTasks(data.tasks);
-      setTasks(data.tasks);
+      setAllTasks(response.data.tasks);
+      setTasks(response.data.tasks);
     } catch (error) {
-      console.log("Error fetching task", error);
+      console.error("Error fetching tasks:", error);
     }
   };
 
 
   const handleLogout = async () => {
     try {
-      const {data} = await axios.get(
+      const { data } = await axios.get(
         "http://localhost:4000/api/v1/user/logout",
-        {withCredentials: true}
+        { withCredentials: "true" }
       );
       toast.success(data.message);
-      navigateTo("/login");
       setIsVerified(false);
     } catch (error) {
-      toast.error(error.response?.data.message);
+      toast.error(error.response.data.message);
     }
   };
 
   const filterTasks = (filterType) => {
-    let filterTasks = [];
+    let filteredTasks = [];
 
-    switch (key) {
+    switch (filterType) {
       case "completed":
-        filterTasks = allTasks.filter((task) => task.status === "completed");
+        filteredTasks = allTasks.filter((task) => task.status === "completed");
+        setTaskTitle("Completed Tasks");
         break;
-        case "incomplete":
-          filterTasks = allTasks.filter((task) => task.status === "incomplete");
-          break;
-          case "archived":
-            filterTasks = allTasks.filter((task) => task.archived === true);
-            break;
-
-            case "all":
-              filterTasks = allTasks;
-              break;
+      case "incomplete":
+        filteredTasks = allTasks.filter((task) => task.status === "incomplete");
+        setTaskTitle("Incomplete Tasks");
+        break;
+      case "archived":
+        filteredTasks = allTasks.filter((task) => task.archived === true);
+        setTaskTitle("Archived Tasks");
+        break;
+      case "all":
+        filteredTasks = allTasks;
+        setTaskTitle("Tasks");
+        break;
       default:
-        filterTasks = allTasks;
+        filteredTasks = allTasks;
     }
-    setTasks(filterTasks)
+    setTasks(filteredTasks);
   };
+
   return (
     <Navbar expand="lg" className={`bg-body-tertiary ${!isVerified ? "d-none" : ""}`}>
       <Container>
