@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -10,6 +11,25 @@ import { Link } from 'react-router-dom';
 
 
 function Header({setTasks, tasks, setIsVerified, isVerified}) {
+  const [allTasks, setAllTasks] = useState([]);
+  useEffect(() => {
+    fetchTasks();
+  }, [isVerified]);
+
+  const fetchTasks = async () => {
+    try {
+      const {data} = await axios.get(
+        "http://localhost:4000/api/v1/task/mytask",
+        {withCredentials: true}
+      );
+      setAllTasks(data.tasks);
+      setTasks(data.tasks);
+    } catch (error) {
+      console.log("Error fetching task", error);
+    }
+  };
+
+
   const handleLogout = async () => {
     try {
       const {data} = await axios.get(
@@ -22,8 +42,31 @@ function Header({setTasks, tasks, setIsVerified, isVerified}) {
       toast.error(error.response?.data.message);
     }
   };
+
+  const filterTasks = (filterType) => {
+    let filterTasks = [];
+
+    switch (key) {
+      case "completed":
+        filterTasks = allTasks.filter((task) => task.status === "completed");
+        break;
+        case "incomplete":
+          filterTasks = allTasks.filter((task) => task.status === "incomplete");
+          break;
+          case "archived":
+            filterTasks = allTasks.filter((task) => task.archived === true);
+            break;
+
+            case "all":
+              filterTasks = allTasks;
+              break;
+      default:
+        filterTasks = allTasks;
+    }
+    setTasks(filterTasks)
+  };
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className={`bg-body-tertiary ${!isVerified ? "d-none" : ""}`}>
       <Container>
         <Navbar.Brand href="#home">Task Manager</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -34,12 +77,12 @@ function Header({setTasks, tasks, setIsVerified, isVerified}) {
               </Link>
               
             <NavDropdown title="Filter Tasks" id="basic-nav-dropdown">
-              <NavDropdown.Item >All Tasks</NavDropdown.Item>
-              <NavDropdown.Item >
+              <NavDropdown.Item onClick={() => filterTasks("all")}>All Tasks</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => filterTasks("completed")}>
                 Complete Tasks
               </NavDropdown.Item>
-              <NavDropdown.Item >Incomplete Tasks</NavDropdown.Item>
-              <NavDropdown.Item >
+              <NavDropdown.Item onClick={() => filterTasks("incomplete")}>Incomplete Tasks</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => filterTasks("archived")}>
                 Archived Tasks
               </NavDropdown.Item>
             </NavDropdown>
