@@ -8,15 +8,18 @@ const ViewTaskModal = ({handleViewModalClose, showViewModal, id}) => {
   const [task, setTask] = useState([]);
   useEffect(() => {
     const getSingleTask = async () => {
-      await axios.get(`http://localhost:4000/api/v1/task/singletask/${id}`, {
-        withCredentials: true,
-      }).then((res) => {
-        setTask(res.data.task);
-      }).catch((error) => {
-        console.log(error.response.data.message);
-      });
+      await axios
+        .get(`http://localhost:4000/api/v1/task/singletask/${id}`, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          setTask(res.data.task);
+        })
+        .catch((error) => {
+          console.log(error.response.data.message);
+        });
     };
-    if(id) {
+    if (id) {
       getSingleTask();
     }
   }, [id]);
