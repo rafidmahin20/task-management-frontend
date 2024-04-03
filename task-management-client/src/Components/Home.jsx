@@ -92,7 +92,7 @@ const Home = ({isVerified, tasks, setTasks}) => {
         <CreateTaskModal 
         handleCreateModalClose={handleCreateModalClose} showCreateModal={showCreateModal} setTasks={setTasks}/>
 
-        <UpdateTaskModal handleUpdateModalShow={handleUpdateModalShow} handleCreateModalClose={handleUpdateModalClose} id={updateTaskId} setTasks={setTasks} showUpdateModal={showUpdateModal}/>
+        <UpdateTaskModal handleUpdateModalShow={handleUpdateModalShow} handleUpdateModalClose={handleUpdateModalClose} id={updateTaskId} setTasks={setTasks} showUpdateModal={showUpdateModal}/>
 
         <ViewTaskModal showViewModal={showViewModal} handleViewModalClose={handleViewModalClose} id={viewTaskId}/>
     </div>
