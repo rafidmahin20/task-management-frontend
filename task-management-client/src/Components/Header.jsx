@@ -10,7 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 
 
-function Header({setTasks,  setIsVerified, isVerified, setTaskTitle,}) {
+function Header({setTasks,  setIsVerified, isVerified, setTaskTitle, setTaskType}) {
   const [allTasks, setAllTasks] = useState([]);
   useEffect(() => {
     fetchTasks();
@@ -49,19 +49,19 @@ function Header({setTasks,  setIsVerified, isVerified, setTaskTitle,}) {
     switch (filterType) {
       case "completed":
         filteredTasks = allTasks.filter((task) => task.status === "completed");
-        setTaskTitle("Completed Tasks");
+        setTaskType("Completed Tasks");
         break;
       case "incomplete":
         filteredTasks = allTasks.filter((task) => task.status === "incomplete");
-        setTaskTitle("Incomplete Tasks");
+        setTaskType("Incomplete Tasks");
         break;
       case "archived":
         filteredTasks = allTasks.filter((task) => task.archived === true);
-        setTaskTitle("Archived Tasks");
+        setTaskType("Archived Tasks");
         break;
       case "all":
         filteredTasks = allTasks;
-        setTaskTitle("Tasks");
+        setTaskType("Tasks");
         break;
       default:
         filteredTasks = allTasks;

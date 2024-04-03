@@ -14,6 +14,7 @@ const App = () => {
   const [tasks, setTasks] = useState([]);
   const [user, setUser] = useState({});
   const [taskTitle, setTaskTitle] = useState("Tasks");
+  const [taskType, setTaskType] = useState("Tasks");
 
   useEffect(() => {
     const handleGetUser = async () => {
@@ -40,12 +41,14 @@ const App = () => {
         setIsVerified={setIsVerified}
         isVerified={isVerified}
         setTaskTitle={setTaskTitle}
+        setTaskType={setTaskType}
         />
         <Routes>
           <Route path='/' element={<Home 
           isVerified={isVerified}
           tasks={tasks}
           setTasks={setTasks}
+          taskType={taskType}
           />}/>
 
           <Route path='/login' element={<Login 

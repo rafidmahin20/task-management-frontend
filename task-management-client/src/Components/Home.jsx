@@ -11,7 +11,7 @@ import ViewTaskModal from '../Components/ViewTaskModal.jsx';
 
 
 
-const Home = ({isVerified, tasks, setTasks}) => {
+const Home = ({isVerified, tasks, setTasks, taskType}) => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
@@ -54,6 +54,7 @@ const Home = ({isVerified, tasks, setTasks}) => {
   return (
     <div className="container my-4">
       <div className="row mb-3">
+        <h1>{taskType}</h1>
         <div className="col text-end">
           <Button variant='primary' onClick={handleCreateModalShow}>Create Task</Button>
         </div>
