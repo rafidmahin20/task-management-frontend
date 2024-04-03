@@ -54,8 +54,8 @@ const Home = ({isVerified, tasks, setTasks, taskType}) => {
   return (
     <div className="container my-4">
       <div className="row mb-3">
-        <h1>{taskType}</h1>
-        <div className="col text-end">
+        <h1 style={{width: "fit-content"}}>{taskType}</h1>
+        <div className="col text-end" style={{width: "fit-content"}}>
           <Button variant='primary' onClick={handleCreateModalShow}>Create Task</Button>
         </div>
       </div>
@@ -87,7 +87,7 @@ const Home = ({isVerified, tasks, setTasks, taskType}) => {
                 </Card>
               </div>
             )
-          })) : <h1>You dont have any tasks</h1>
+          })) : <h1>You dont have any {taskType}</h1>
         }
       </div>
         <CreateTaskModal 
